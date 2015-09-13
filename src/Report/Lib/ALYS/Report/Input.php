@@ -10,11 +10,6 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 
 
 	}
-
-	/**
-	* ÌØÊâ¼ì²âµÄ´¦Àí
-	* ¹³×Ó
-	*/
 	public function chkInputParam($type){
 
 	}
@@ -24,8 +19,8 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 	*/
 	public function _chkInputParam($type){
 		$aTables=$this->aInput['input'][$type];
-		$aDimenKey=array('key','group','options','selected', 'sortAble','dimenFilter','timeslotType', 'thclass');
-		$aMetricKey=array('key','show','type','trendTypeStyle','ispercent');
+		$aDimenKey=array('key', 'value', 'group','options','selected', 'sortAble','dimenFilter','timeslotType', 'thclass');
+		$aMetricKey=array('key', 'value', 'show','type','trendTypeStyle','ispercent');
 		if(isset($aTables['table']) && is_array($aTables['table'])){
 			foreach($aTables['table'] as $aTable){
 
@@ -58,7 +53,7 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 			}
 		}
 
-		$this->chkInputParam($type); //¹³×Ó
+		$this->chkInputParam($type); //ï¿½ï¿½ï¿½ï¿½
 	}
 
 
@@ -81,7 +76,7 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 	}
 
 	/**
-	* ×¼±¸ÊäÈë²ÎÊý
+	* ×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	*/
 	public function initInput($type){
 
@@ -96,7 +91,7 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 		$aTables=$this->aInput['input'][$type]['table'];
 		$aMainTable['showField']=array();
 		$aMainTable['field3']=array();
-		$aMainTable['table2Field']=array(); //Ö»Õë¶Ôdate,day
+		$aMainTable['table2Field']=array(); //Ö»ï¿½ï¿½ï¿½date,day
 		//echo "$type=";echo "aTables=";print_r($aTables);
 
 		$oDict = \YcheukfReport\Lib\ALYS\ALYSFunction::loadDictionary('Metric');
@@ -106,7 +101,7 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 			if(!empty($aTable['dimen'])&&is_array($aTable['dimen'])){
 				foreach($aTable['dimen'] as $dimen){
 					$key=$dimen['key'];
-					if(isset($aTmpTables[$table]['dimen']['key'])&&in_array($key,$aTmpTables[$table]['dimen']['key']))continue;//dimenÈ¥ÖØ
+					if(isset($aTmpTables[$table]['dimen']['key'])&&in_array($key,$aTmpTables[$table]['dimen']['key']))continue;//dimenÈ¥ï¿½ï¿½
 					if($dimen['group']){
 
 						$interval = $dimen['selected'];
@@ -121,9 +116,9 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 							$aMainTable['table2Field'][$table]=\YcheukfReport\Lib\ALYS\Report::getDateFeildByTable($type,$table);
 						}
 
-						if($type != 'flash'){//ÎªflashÊ±²»ÐèÒªshowField
+						if($type != 'flash'){//ÎªflashÊ±ï¿½ï¿½ï¿½ï¿½ÒªshowField
 							if(!in_array($key,$aMainTable['showField'])){
-								$aMainTable['showField'][]=$key; //ÏÔÊ¾µÄ×Ö¶Î Î¬¶È
+								$aMainTable['showField'][]=$key; //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ö¶ï¿½ Î¬ï¿½ï¿½
 								$aMainTable['field2Table'][$key]=$table;
 							}
 						}
@@ -154,12 +149,12 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 					if($metric['show']){
 						//if($aMainTable['table']==$table)
 						if(!in_array($metric['key'],$aMainTable['showField'])){
-							$aMainTable['showField'][]=$metric['key']; //ÏÔÊ¾µÄ×Ö¶Î Ö¸±ê
+							$aMainTable['showField'][]=$metric['key']; //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ö¶ï¿½ Ö¸ï¿½ï¿½
 						}
 						if(3==$metric['type'][0]){
-							//È¥ÖØ
+							//È¥ï¿½ï¿½
 							if(!in_array($metric['key'],$aMainTable['showField'])){
-								$aMainTable['showField'][]=$metric['key']; //ÏÔÊ¾µÄ×Ö¶Î Ö¸±ê
+								$aMainTable['showField'][]=$metric['key']; //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ö¶ï¿½ Ö¸ï¿½ï¿½
 							}
 						}else{
 							if(!in_array($metric['key'],$aMainTable['showField']))
@@ -179,16 +174,16 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 								break;
 							case 3:
 								if(!in_array($metric['key'],$aMainTable['field3'])){
-									$aMainTable['field3'][]=$metric['key']; //ÏÔÊ¾µÄ×Ö¶Î Ö¸±ê
+									$aMainTable['field3'][]=$metric['key']; //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ö¶ï¿½ Ö¸ï¿½ï¿½
 								}
 
-								if($table==$aMainTable['table']){//Ö÷±í´¦Àí
+								if($table==$aMainTable['table']){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 									$key=$metric['type'][1][0];
 									if(!in_array($key,$aTmpTables[$table]['metric'])){
 										$aTmpTables[$table]['metric'][]=$key;
 									}
 									$aMainTable['field2Table'][$key]=$table;
-								}else{//´Ó±í´¦Àí
+								}else{//ï¿½Ó±ï¿½ï¿½ï¿½ï¿½
 									$key=$metric['type'][1][0];
 									if(!in_array($key,$aTmpTables[$table]['metric'])){
 										$aTmpTables[$table]['metric'][]=$key;
@@ -249,8 +244,8 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 	}
 
 	/**
-	* ³õÊ¼»¯ÊäÈë²ÎÊý
-	* ²¹È«
+	* ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	* ï¿½ï¿½È«
 	*/
 	public function _initaInput($type){
 
@@ -283,11 +278,11 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 		\YcheukfReport\Lib\ALYS\Report\Start::setInput($this->aInput);
 	}
 
-	//×éÖ¯ ÎªÁË¸øengineÓÃ
+	//ï¿½ï¿½Ö¯ Îªï¿½Ë¸ï¿½engineï¿½ï¿½
 	public function initInputAdvance($type){
 		$aMainTable = array();
 		$tables = array();
-		//$aMainTable ×éÖ¯
+		//$aMainTable ï¿½ï¿½Ö¯
 		$table = 'mainTable';
 
 		$aMetric = \YcheukfReport\Lib\ALYS\Report\Advance::getAdvanceMetrics($type);
@@ -303,20 +298,20 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 		}
 		$aMainTable['field3']=array();
 		$aMainTable['table2Field']=array();
-		$aMainTable['table'] = $table;//Ö»ÉèÖÃÒ»¸öÖ÷±í
+		$aMainTable['table'] = $table;//Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(is_array($aMainTable['showField'])){
 			foreach($aMainTable['showField'] as $f){
 				$aMainTable['field2Table'][$f] = $table;
 			}
 		}
 
-		//tables ×éÖ¯
+		//tables ï¿½ï¿½Ö¯
 		$aDimens = \YcheukfReport\Lib\ALYS\Report\Advance::getAdvanceDimens($type);
 		$tables[$table]['dimen']['key'] = $aDimens;
 		$tables[$table]['dimen']['dimenkey2field'] = array_flip($aDimens);
 		$this->aInput['input'][$type]['mainTable']=$aMainTable;
 		$this->aInput['input'][$type]['tables'] = $tables;
-		//³õÊ¼Î¬¶È Ö¸±ê (¼æÈÝ)
+		//ï¿½ï¿½Ê¼Î¬ï¿½ï¿½ Ö¸ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½)
 		$this->aInput['input'][$type]['table'][$table]['dimen']=$this->aInput['input'][$type]['advanced']['dimen'];
 		$this->aInput['input'][$type]['table'][$table]['metric']=$this->aInput['input'][$type]['advanced']['metric'];
 		\YcheukfReport\Lib\ALYS\Report\Start::setInput($this->aInput);

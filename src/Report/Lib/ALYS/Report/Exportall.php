@@ -209,7 +209,7 @@ class Exportall extends \YcheukfReport\Lib\ALYS\Report{
 	}
 
 	private function _conv($content){
-		$encode = mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));
+//		$encode = \mb_detect_encoding($content, array('ASCII','UTF-8','GB2312','GBK','BIG5'));
 //		if('GBK'!==$encode){
 //			$content = iconv($encode, "GBK", $content);
 //		}
