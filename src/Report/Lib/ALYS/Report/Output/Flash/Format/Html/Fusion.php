@@ -39,7 +39,7 @@ class Fusion{
 	public function go_start(){
 		$_ALYSconfig = \YcheukfReport\Lib\ALYS\ALYSConfig::get();//print_r($this->aOutput['flash']);
 		$this->aDatas = $this->aOutput['flash'];
-		$categoryLength = count($this->aDatas[0]);
+		$categoryLength = count($this->aDatas) ? 0 : count($this->aDatas[0]);
 		$trendStyleCategoryLength = 30;
 		$this->trend_step = $_ALYSconfig['fusion']['trend_step'];
 		$this->trendTypeStyle = $this->aInput['input']['flash']['typeStyle'] = isset($this->aInput['input']['flash']['typeStyle']) ? $this->aInput['input']['flash']['typeStyle'] : "line";
