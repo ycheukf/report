@@ -10,6 +10,7 @@ class ALYSFunction{
 	protected static $instancesClass = array();
 	protected static $instancesPlugin = array();
 	protected static $instancesDictionary = array();
+	protected static $aClassMapper = array();
 	
 	/**
 	* 重置ALYS的所有对象,配置, 为了兼容多个实例共存
@@ -34,6 +35,9 @@ class ALYSFunction{
 		return self::$instancesClass[$className];
 	}
 	
+	public static function setClassMapper($sClassName, $sClassPath){
+		self::$aClassMapper[$sClassName] = $sClassPath;
+	}
 	/** debug 函数
 	@param mix data 调试的数据
 	@param string method 写文件方法,传'w'则覆盖,传'a'则续写
@@ -93,15 +97,19 @@ class ALYSFunction{
 	public static function loadDictionary($className){
 		if (empty(self::$instancesDictionary[$className]))
 		{
-			$oDict = self::getExtClassNamePath("Report.Dictionary.".$className);
-			if($oDict){
-				self::debug($className, 'a', 'load ext dictionary');
-				self::$instancesDictionary[$className] = $oDict;
-			}else if($oDict = self::getCoreClassNamePath("Report.Dictionary.".$className)){
-				self::debug($className, 'a', 'load core dictionary');
-				self::$instancesDictionary[$className] = $oDict;
+			if (isset(self::$aClassMapper[$className])) {
+				self::$instancesDictionary[$className] = new self::$aClassMapper[$className]();
 			}else{
-				throw new \YcheukfReport\Lib\ALYS\ALYSException('Ext_Dictionary_NOT_EXISTS'."\n path=".$className);
+				$oDict = self::getExtClassNamePath("Report.Dictionary.".$className);
+				if($oDict){
+					self::debug($className, 'a', 'load ext dictionary');
+					self::$instancesDictionary[$className] = $oDict;
+				}else if($oDict = self::getCoreClassNamePath("Report.Dictionary.".$className)){
+					self::debug($className, 'a', 'load core dictionary');
+					self::$instancesDictionary[$className] = $oDict;
+				}else{
+					throw new \YcheukfReport\Lib\ALYS\ALYSException('Ext_Dictionary_NOT_EXISTS'."\n path=".$className);
+				}
 			}
 		}
 		return self::$instancesDictionary[$className];
