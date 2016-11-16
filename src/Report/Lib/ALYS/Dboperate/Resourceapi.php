@@ -128,7 +128,7 @@ class Resourceapi extends \YcheukfReport\Lib\ALYS\Dboperate\Dboperate{
             }
 //            $aWhere['$or'][] = array("a"=>1);
 //            $aWhere['$or'][] = array("b"=>1);
-//            var_dump($aWhere);
+           // var_dump($aWhere);
             $aParams['params']['select']['where'] = $aWhere;
 //            { field: { $in: [<value1>, <value2>, ... <valueN> ] } }
         }

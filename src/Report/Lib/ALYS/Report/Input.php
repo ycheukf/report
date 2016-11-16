@@ -19,10 +19,11 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 	*/
 	public function _chkInputParam($type){
 		$aTables=$this->aInput['input'][$type];
-		$aDimenKey=array('key', 'value', 'group','options','selected', 'sortAble','dimenFilter','timeslotType', 'thclass');
-		$aMetricKey=array('key', 'value', 'show','type','trendTypeStyle','ispercent');
+		$aDimenKey=array('key', 'value', 'group','options','selected', 'sortAble','dimenFilter','timeslotType', 'thclass', 'label');
+		$aMetricKey=array('key', 'value', 'show','type','trendTypeStyle','ispercent', 'label');
 		if(isset($aTables['table']) && is_array($aTables['table'])){
-			foreach($aTables['table'] as $aTable){
+			foreach($aTables['table'] as $sResource => $aTable){
+				// var_dump($sResource);
 
 				if(!empty($aTable['dimen'])&&is_array($aTable['dimen'])){
 					foreach($aTable['dimen'] as $dimen){
@@ -205,9 +206,13 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 		\YcheukfReport\Lib\ALYS\Report\Start::setInput($this->aInput);
 	}
 
-	private function _initDimes($aDimens){
-		foreach($aDimens as $k=>$aDimen)
-			$aDimens[$k] = is_string($aDimen) ? array('key'=>$aDimen) : $aDimen;
+	private function _initDimes($aDimens, $sTable=""){
+		foreach($aDimens as $k=>$aDimen){
+			$aTmp3 = is_string($aDimen) ? array('key'=>$aDimen) : $aDimen;
+
+			$aTmp3['label'] =  empty($sTable)? $aTmp3['key'] : ($sTable.$this->splitChar.$aTmp3['key']);
+			$aDimens[$k] = $aTmp3;
+		}
 		foreach($aDimens as $k=>$aDimen){
 			if(!(isset($aDimen['group']) and $aDimen['group']===false)){
 				$aDimens[$k]['group']=true;
@@ -230,8 +235,11 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 		return $aDimens;
 	}
 	private function _initMetrics($aMetrics){
-		foreach($aMetrics as $k=>$aTmp)
-			$aMetrics[$k] = is_string($aTmp) ? array('key'=>$aTmp) : $aTmp;
+		foreach($aMetrics as $k=>$aTmp){
+			$aTmp3 = is_string($aTmp) ? array('key'=>$aTmp) : $aTmp;
+			$aTmp3['label'] = empty($sTable)? $aTmp3['key'] : ($sTable.$this->splitChar.$aTmp3['key']);
+			$aMetrics[$k] = $aTmp3;
+		}
 		foreach($aMetrics as $k=>$aMetric){
 			if(!(isset($aMetric['show']) and $aMetric['show']===false)){
 				$aMetrics[$k]['show']=true;
@@ -265,11 +273,11 @@ class Input extends \YcheukfReport\Lib\ALYS\Report{
 			$aInput=  $this->aInput['input'][$type]['table'];
 			foreach($aInput as $table=> $aTable){
 				if(!empty($aTable['dimen'])&&is_array($aTable['dimen'])){
-					$aInput[$table]['dimen'] = $this->_initDimes($aTable['dimen']);
+					$aInput[$table]['dimen'] = $this->_initDimes($aTable['dimen'], $table);
 				}
 
 				if(!empty($aTable['metric'])&&is_array($aTable['metric'])){
-					$aInput[$table]['metric'] = $this->_initMetrics($aTable['metric']);
+					$aInput[$table]['metric'] = $this->_initMetrics($aTable['metric'], $table);
 				}
 			}
 			$this->aInput['input'][$type]['table'] = $aInput;

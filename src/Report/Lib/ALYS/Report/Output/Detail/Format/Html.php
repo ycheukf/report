@@ -30,7 +30,7 @@ class Html extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 					$selected = 'selected';
 				}
 				//$selected = $aGroup['pieFieldSelected'] ? 'selected':'';
-				$sHTML .= '<OPTION VALUE="'.$aGroup['key'].'" '.$selected.'>'.\YcheukfReport\Lib\ALYS\ALYSLang::_($aGroup['key']).'</OPTION>';
+				$sHTML .= '<OPTION VALUE="'.$aGroup['key'].'" '.$selected.'>'.\YcheukfReport\Lib\ALYS\ALYSLang::_($aGroup['label']).'</OPTION>';
 			}
 			$th .= "\n<th nowrap class='thPieList' class='td250'>".\YcheukfReport\Lib\ALYS\ALYSLang::_('percent').
 				"<SELECT class='pieList'>$sHTML</SELECT></th>";
