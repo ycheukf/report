@@ -26,7 +26,8 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Plugin{
 		$aInput = \YcheukfReport\Lib\ALYS\Report\Start::getInput();
 
 
-		$sCsv = "\xEF\xBB\xBF";
+		$sCsv = "";
+		// $sCsv = "\xEF\xBB\xBF";
 		if($aInput['nodateFlag'] == false){
 			foreach($aInput['date'] as $aTmp){
 				$sCsv .= "#".$aTmp['s']."~".$aTmp['e']."\r\n";

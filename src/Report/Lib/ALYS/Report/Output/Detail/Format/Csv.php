@@ -7,6 +7,18 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 
 	}
 
+	public function getCharset()
+	{
+		$sReturn = "utf8";
+		if (isset($this->aInput['output']['exportInfo']['charset'])) {
+			$sReturn = $this->aInput['output']['exportInfo']['charset'];
+		}
+		if (in_array(strtolower($sReturn), array("utf8", "utf-8"))) {
+			$sReturn = "UTF-8";
+		}
+		return $sReturn;
+	}
+
 	function go(){
 
 		$bIsPerspective = 'perspective'==$this->aInput['input']['detail']['type']?true : false;//是否为透视图
@@ -14,6 +26,9 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 		$csvTitle = $csvBody = $tmpTdString =  '';
 		$indexNum = 1;
 		$csvTitle .= "NO $separator";
+
+		// var_dump($this->getCharset());
+		// exportInfo
 
 		$oCSVPlugin = \YcheukfReport\Lib\ALYS\ALYSFunction::loadPlugin("csv");
 		$csvBody = $oCSVPlugin->ALYSfmtOutputCsv();//waiting...
@@ -43,7 +58,8 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 					}
 					else
 					{
-						$csvTitle .=  $label . "$separator";
+						// $csvTitle .=  \YcheukfReport\Lib\ALYS\ALYSLang::_($aGroup['label']) . "$separator";
+						$csvTitle .=  \YcheukfReport\Lib\ALYS\ALYSFunction::iconv2SpecialCharset(\YcheukfReport\Lib\ALYS\ALYSLang::_($aGroup['label']), $this->getCharset()) . "$separator";
 					}
 				}
 			}
@@ -75,14 +91,14 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 							$sAlign = empty($align)?"":"align='{$align}'";
 							$sColspan = $colspan==1?"":"colspan='{$colspan}'";
 
-							$csvBody .= ("\"{$label}\"".str_repeat($separator, $colspan));
+							$csvBody .= ("\"".\YcheukfReport\Lib\ALYS\ALYSFunction::iconv2SpecialCharset(\YcheukfReport\Lib\ALYS\ALYSLang::_($label), $this->getCharset())."\"".str_repeat($separator, $colspan));
 						}
 					}
 				}
 				$csvBody .= "\r\n";
 			}
 		}
-//		var_export($csvBody);
+		// var_dump($csvBody);
 		//无数据 标题加上
 //		if(empty($csvBody))$csvBody = $csvTitle;
 		if(empty($aryListData))$csvBody .= $csvTitle;//waiting

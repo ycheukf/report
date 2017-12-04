@@ -203,6 +203,23 @@ class ALYSFunction{
 
 	}
 
+	static function iconv2SpecialCharset($sMessage, $sOutCharset){
+
+	    $sEncode = mb_detect_encoding($sMessage , array('UTF-8','GB2312', 'GBK','LATIN1','BIG5'));
+	    if ($sEncode != $sOutCharset) {
+	        $sMessage = iconv($sEncode, $sOutCharset, $sMessage);
+	    }
+	    return $sMessage;
+	}
+
+	static function iconv2Utf8($sMessage){
+
+	    $sEncode = mb_detect_encoding($sMessage , array('UTF-8','GB2312', 'GBK','LATIN1','BIG5'));
+	    if ($sEncode != 'UTF-8') {
+	        $sMessage = iconv($sEncode, "UTF-8", $sMessage);
+	    }
+	    return $sMessage;
+	}
 	/**
 	*	@私有方法——删除文件
 	**/
