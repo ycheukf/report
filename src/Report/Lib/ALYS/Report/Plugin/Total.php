@@ -36,8 +36,8 @@ class Total extends \YcheukfReport\Lib\ALYS\Report\Plugin{
 						$trClass = $trClass=="_totaltrcss0"?'_totaltrcss1':'_totaltrcss0';
 						$sHTML .= "\n</tr>\n\r<tr {$trClass} >";
 					}
-					$keyLabel = \YcheukfReport\Lib\ALYS\\YcheukfReport\Lib\ALYS\ALYSLang::_("".$metric);
-					$keyLabelTip = \YcheukfReport\Lib\ALYS\\YcheukfReport\Lib\ALYS\ALYSLang::_("".$metric.'-tip');
+					$keyLabel = \YcheukfReport\Lib\ALYS\YcheukfReport\Lib\ALYS\ALYSLang::_("".$metric);
+					$keyLabelTip = \YcheukfReport\Lib\ALYS\YcheukfReport\Lib\ALYS\ALYSLang::_("".$metric.'-tip');
 					$sHTML .= "\n<td _totaltdcss0 ><span>{$keyLabel}</span><span _totalspancss0 title='{$keyLabelTip}' >&nbsp;</span></td>";
 					$sTmp = "";
 					foreach($aOutput['total'] as $ii => $aTmp){

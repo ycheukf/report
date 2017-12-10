@@ -25,7 +25,7 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 		$separator = $this->_getCsvSeparator();
 		$csvTitle = $csvBody = $tmpTdString =  '';
 		$indexNum = 1;
-		$csvTitle .= "NO $separator";
+		$csvTitle .= " ";
 
 		// var_dump($this->getCharset());
 		// exportInfo
@@ -81,6 +81,10 @@ class Csv extends \YcheukfReport\Lib\ALYS\Report\Output\Detail\Format{
 						foreach($aTmp as $ii => $item){
 							$colspan = isset($item['colspan'])?$item['colspan']:1;
 							if($colspan==0)continue;//被前面的td跨列
+
+							if ((isset($item['tdKey']) && $item['tdKey']=='tdNO')) {
+								continue;
+							}
 
 							$label = (isset($item['tdKey']) && $item['tdKey']=='tdNO') ? ($i+1+$start) : (isset($item['label'])?$item['label']:'');
 							//$label = strip_tags(preg_replace('/'.$separator.'/', " ", $label));
